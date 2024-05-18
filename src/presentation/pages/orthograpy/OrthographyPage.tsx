@@ -10,7 +10,7 @@ export const OrthographyPage = () => {
 
   // Estados
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState([]);
+  const [messages, setMessages] = useState<Message[]>([]);
 
 
   return (
@@ -20,12 +20,28 @@ export const OrthographyPage = () => {
 
           {/* Mensaje de GPT */}
           <GptMessage text="Hola, puedes escribir tu texto en español, y te ayudo a corregir la ortografía." />
-            
-          {/* Mensaje de usuario */}
-          <MyMessage text="Hola Mundo"/>
+
+          { 
+            messages.map( (message, index) => (
+
+              message.isGpt 
+              ? (
+                // Mensaje de OpenAI
+                <GptMessage key={index} text="Esto es OpenAI" />
+              )
+              : (
+                // Mensaje de usuario
+                <MyMessage key={index} text={message.text} />
+              )
+
+            ))
+          }
 
           {/* Loader */}
-          <TypingLoader className="fade-in" />
+          <div className="col-start-1 col-end-12 fade-in">
+            <TypingLoader/>
+          </div>
+         
           
         </div>
       </div>
