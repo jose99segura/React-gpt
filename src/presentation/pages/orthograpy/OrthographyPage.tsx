@@ -70,6 +70,16 @@ export const OrthographyPage = () => {
         disableCorrections
       />
 
+       {/* <TextMessageBoxFile
+        onSendMessage={ handlePost }
+        placeholder="Escribe un mensaje..."
+        /> */}
+      
+      {/* <TextMessageBoxSelect 
+        onSendMessage={ console.log }
+        options= { [ { id: "1", text: 'Hola' }, { id: "2", text: 'Mundo' } ] }
+      /> */}
+
     </div>
   )
 }
