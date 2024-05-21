@@ -39,9 +39,6 @@ export const OrthographyPage = () => {
     // IsLoading a false
     setIsLoading(false);
 
-    // TODO: Añadir mensaje de isGPT en true
-
-
   }
 
 
