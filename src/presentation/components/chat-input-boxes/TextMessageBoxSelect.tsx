@@ -26,6 +26,8 @@ export const TextMessageBoxSelect = ({ onSendMessage, placeholder = "", disableC
 
         if( message.trim().length === 0 ) return;
 
+        if( selectedOption === '' ) return;
+
         onSendMessage( message, selectedOption );
         setMessage("");
     }

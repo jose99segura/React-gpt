@@ -1,6 +1,6 @@
 
 
-export async function* prosConsStreamGeneratorUseCase( prompt: string ) {
+export async function* prosConsStreamGeneratorUseCase( prompt: string, abortSignal: AbortSignal) {
 
     try {
 
@@ -10,7 +10,10 @@ export async function* prosConsStreamGeneratorUseCase( prompt: string ) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ prompt }),
-            //TODO: abortSignal
+
+            //Señal de aborto para cancelar la solicitud
+            signal: abortSignal
+
         });    
 
         if( !resp.ok ) throw new Error('No se pudo realizar los pros y cons');
