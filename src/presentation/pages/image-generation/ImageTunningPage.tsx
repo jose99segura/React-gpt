@@ -1,6 +1,6 @@
 
 import { useState } from "react"
-import { GptMessage, MyMessage, TypingLoader, TextMessageBox, GptMessageImage } from "../../components";
+import { GptMessage, MyMessage, TypingLoader, TextMessageBox, GptMessageImage, GptMessageSelectableImage } from "../../components";
 import { imageGenerationUseCase, imageVariationUseCase } from "../../../core/use-cases";
 
 interface Message {
@@ -16,9 +16,18 @@ export const ImageTunningPage = () => {
 
   // Estados
   const [isLoading, setIsLoading] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      isGpt: true,
+      text: 'Imagen base',
+      info: {
+        imageUrl: 'http://localhost:3000/gpt/image-generation/1716800434892.png',
+        alt: 'Imagen base'
+      }
+    }
+  ]);
   const [originalImageAndMask, setOriginalImageAndMask] = useState({
-    original: 'http://localhost:3000/gpt/image-generation/1716630012740.png' as string | undefined,
+    original: undefined as string | undefined,
     mask: undefined as string | undefined,
   })
 
@@ -48,7 +57,9 @@ export const ImageTunningPage = () => {
     setIsLoading(true);
     setMessages( (prev) => [...prev, { text, isGpt: false }] );
 
-    const imageInfo = await imageGenerationUseCase( text );
+    const { original, mask } = originalImageAndMask;
+
+    const imageInfo = await imageGenerationUseCase( text, original, mask );
     setIsLoading(false);
 
     if( !imageInfo) {
@@ -99,11 +110,16 @@ export const ImageTunningPage = () => {
               message.isGpt 
               ? (
                 // Mensaje de OpenAI
-                <GptMessageImage 
+                // GptMessageImage
+                <GptMessageSelectableImage
                   key={index} 
                   text={message.text}
                   imageUrl={message.info?.imageUrl!}
                   alt={message.info?.alt!} 
+                  onImageSelected={ (maskImageUrl) =>  setOriginalImageAndMask({
+                    original: message.info?.imageUrl!,
+                    mask: maskImageUrl
+                  }) }
                 />
               )
               : (

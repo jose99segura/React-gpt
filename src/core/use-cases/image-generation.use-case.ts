@@ -8,7 +8,10 @@ interface Image {
 }
 
 
-export const imageGenerationUseCase = async( prompt: string, originaImage?: string, maskImage?: string ): Promise<GeneratedImage> => {
+export const imageGenerationUseCase = async( prompt: string, originalImage?: string, maskImage?: string ): Promise<GeneratedImage> => {
+
+    console.log({ prompt, originalImage, maskImage });
+    
 
     try {
 
@@ -17,7 +20,7 @@ export const imageGenerationUseCase = async( prompt: string, originaImage?: stri
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ prompt, originaImage, maskImage })
+            body: JSON.stringify({ prompt, originalImage, maskImage })
         });
 
         const { url, revised_prompt: alt } = await resp.json();        
