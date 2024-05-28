@@ -8,10 +8,7 @@ interface Image {
 }
 
 
-export const imageGenerationUseCase = async( prompt: string, originalImage?: string, maskImage?: string ): Promise<GeneratedImage> => {
-
-    console.log({ prompt, originalImage, maskImage });
-    
+export const imageGenerationUseCase = async( prompt: string, originalImage?: string, maskImage?: string ): Promise<GeneratedImage> => {    
 
     try {
 
